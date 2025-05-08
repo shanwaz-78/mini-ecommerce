@@ -5,20 +5,12 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Grid,
   Container,
   TextField,
   Box,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-
-interface Product {
-  productId: string;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-}
+import type { Product } from "../types/ProductType";
 
 const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -76,9 +68,20 @@ const ProductList = () => {
       ) : filteredProducts.length === 0 ? (
         <Typography variant="h6">No matching products found.</Typography>
       ) : (
-        <Grid container spacing={4}>
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          justifyContent="space-between"
+          gap={2}
+        >
           {filteredProducts.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product.productId}>
+            <Box
+              key={product.productId}
+              sx={{
+                width: { xs: "100%", sm: "48%", md: "32%" },
+                mb: 4,
+              }}
+            >
               <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
                   component="img"
@@ -98,9 +101,9 @@ const ProductList = () => {
                   </Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
       )}
     </Container>
   );

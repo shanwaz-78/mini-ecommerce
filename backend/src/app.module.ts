@@ -10,6 +10,10 @@ import { ProductsModule } from './products/products.module';
       useFactory: () => ({
         type: 'postgres',
         host: process.env.HOST,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+        url: process.env.DATABASE_URL,
         username: process.env.DB_USERNAME,
         password: process.env.DB_PSWD,
         database: process.env.DATABASE,

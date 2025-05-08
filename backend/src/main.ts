@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const PORT = app.get(ConfigService).get<string>('APP_PORT');
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: 'https://mini-ecommerce-lpj6.vercel.app',
   });
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',

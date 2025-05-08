@@ -1,0 +1,21 @@
+import axios from "axios";
+
+const baseURL = import.meta.env.VITE_BASE_URL || "http://localhost:8181";
+
+const api = axios.create({
+  baseURL,
+});
+
+export const addProduct = (data: FormData) =>
+  api.post("/products/add-product", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+export const getAllProducts = () =>
+  api.get("/products", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAllProducts } from "../services/Api";
 import {
   Card,
@@ -12,6 +12,14 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
+interface Product {
+  productId: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+}
+
 const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState("");
@@ -20,32 +28,30 @@ const ProductList = () => {
     data: products,
     isLoading,
     isError,
-  } = useQuery({
+  } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: async () => (await getAllProducts()).data,
     staleTime: 2 * 60 * 1000,
     refetchOnMount: "always",
     refetchOnWindowFocus: true,
-    cacheTime: 15 * 60 * 1000,
   });
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedTerm(searchTerm);
     }, 500);
-
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  const handleProductSearch = (e) => {
+  const handleProductSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
   const filteredProducts =
     products?.filter((product) => {
       const search = debouncedTerm.toLowerCase().trim();
-      const name = product?.name?.toLowerCase() || "";
-      const description = product?.description?.toLowerCase() || "";
+      const name = product.name?.toLowerCase() || "";
+      const description = product.description?.toLowerCase() || "";
       return name.includes(search) || description.includes(search);
     }) || [];
 
@@ -77,8 +83,8 @@ const ProductList = () => {
                 <CardMedia
                   component="img"
                   height="200"
-                  image={product.image}
-                  alt={product.name}
+                  image={product.image || "/placeholder.png"}
+                  alt={product.name || "Product image"}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h6" component="div">

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_BASE_URL || "http://localhost:8181";
+const baseURL =
+  import.meta.env.VITE_BASE_URL ||
+  "https://mini-ecommerce-1-tqqu.onrender.com/";
 
 const api = axios.create({
   baseURL,

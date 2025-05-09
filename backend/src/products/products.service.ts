@@ -42,7 +42,7 @@ export class ProductsService {
         .filter((eachProduct) => eachProduct.image !== null)
         .map((eachProduct) => ({
           ...eachProduct,
-          image: `http://localhost:8181/uploads/${eachProduct.image}`,
+          image: `https://mini-ecommerce-1-tqqu.onrender.com/uploads/${eachProduct.image}`,
         }));
     } catch (error) {
       console.error(`[Error]: Failed to get All images.`, error.message);

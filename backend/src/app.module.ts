@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
+import { HealthController } from './health/health.controller';
 
 @Module({
   imports: [
@@ -9,7 +10,6 @@ import { ProductsModule } from './products/products.module';
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'postgres',
-        host: process.env.HOST,
         ssl: {
           rejectUnauthorized: false,
         },
@@ -25,7 +25,7 @@ import { ProductsModule } from './products/products.module';
     }),
     ProductsModule,
   ],
-  controllers: [],
+  controllers: [HealthController],
   providers: [],
 })
 export class AppModule {}

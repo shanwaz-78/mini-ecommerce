@@ -38,7 +38,7 @@ export class ProductsController {
     return this.productsService.create(createProductDto, file);
   }
 
-  @Get('/')
+  @Get('')
   findAll(){
     return this.productsService.findAll()
   }
